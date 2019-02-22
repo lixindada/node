@@ -1,4 +1,4 @@
-module.exports = function(sql){
+module.exports = function(sql, isApp){
   var mysql = require('mysql');
   var writeLog = require('./common/writeLog');
   var connection = mysql.createConnection({
@@ -15,17 +15,21 @@ module.exports = function(sql){
     //查
     var data = connection.query(sql,function (err, result) {
       if(err){
-        writeLog(err.message+'\n'+sql);
-        console.log(writeLog);
-        console.log('[SELECT ERROR] - ',err.message);
+        if(isApp){
+          writeLog(err.message+'\n'+sql,'errs.log');
+        } else {
+          writeLog(err.message+'\n'+sql,'err.log');
+        }
+        // console.log(writeLog);
+        // console.log('[SELECT ERROR] - ',err.message);
         reject(err);
         return;
       }
-      console.log('--------------------------SELECT----------------------------');
-      console.log(result);
+      // console.log('--------------------------SELECT----------------------------');
+      // console.log(result);
       resolve(result);
       // response.write();
-      console.log('------------------------------------------------------------\n\n');
+      // console.log('------------------------------------------------------------\n\n');
     });
     connection.end();
   });

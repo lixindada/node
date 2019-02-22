@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 
 // 列表
 app.get('/list_user', function (req, res) {
-  var  sql = 'SELECT * FROM spb';
+  var  sql = 'SELECT * FROM spb1';
   mysqlDB(sql).then(resDB=>{
     console.log(resDB);
     const data = resDB;
