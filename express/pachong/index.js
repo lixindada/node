@@ -82,11 +82,11 @@ function collection(){
                     var  sql = `INSERT INTO csdn_list (id, title, summary,detailUrl,createTime,shown_offset,fabulous,readings,comments)` +
                          ` VALUES ('',${JSON.stringify(item.title)},${JSON.stringify(item.summary)},'${item.url.toString()}',${item.shown_time},${item.shown_offset},${fabulous},${item.views},${item.comments})`;
                     mysqlDB(sql,true).then(resDB=>{
-                      console.log("---\n");
-                      console.log(resDB);
-                      console.log("---\n");
+                      // console.log("---\n");
+                      // console.log(resDB);
+                      // console.log("---\n");
                     },err=>{
-                      console.log(err);
+                      // console.log(err);
                     });
                   }
                 }
