@@ -8,7 +8,9 @@
     "multer": "^1.4.1",
     "mysql": "^2.16.0",
     "request": "^2.88.0",
-    "silly-datetime": "^0.1.2"
+    "silly-datetime": "^0.1.2",
+    "superagent": "^4.1.0",
+    "superagent-proxy": "^2.0.0"
   },
   "scripts": {
     "csdnstart": "supervisor ./express/pachong/index.js"

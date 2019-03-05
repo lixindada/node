@@ -8,6 +8,9 @@ module.exports = function(text,file){
     case 'errs.log':
       fileNum = './express/log/err.log';
       break;
+    case '../log/err.log':
+      fileNum = '../log/err.log';
+      break;
     default:
       fileNum = './express/log/' + file;
   }
