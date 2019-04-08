@@ -4,8 +4,8 @@ module.exports = function(sql, isApp){
   var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : '123456',
-    database : 'sp'
+    password : '123456', // 123456
+    database : 'sp'        // sp
   });
   // 解析 url 参数
   // response.write(util.inspect(request.url,true));

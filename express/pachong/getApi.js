@@ -7,6 +7,7 @@ var proxys =[];
 var useful =[];
 
 function getProxys(pageNum){
+  console.log("xis");
   var promise = new Promise(function (resolve, reject) {
     let userAgent = userAgents[parseInt(Math.random()*userAgents.length)];
     url = "https://www.xicidaili.com/nn/"+pageNum;
@@ -37,6 +38,7 @@ function getProxys(pageNum){
           }
         }
       }
+      console.log(22222222);
       check().then(xhr=>{
         resolve(xhr);
       });
