@@ -13,7 +13,8 @@ app.get('/', function (req, res) {
 
 // 列表
 app.get('/list_user', function (req, res) {
-  var  sql = 'SELECT * FROM spb1';
+  var  sql = 'SELECT * FROM csdn_list';
+  console.log(1111111);
   mysqlDB(sql).then(resDB=>{
     console.log(resDB);
     const data = resDB;
@@ -38,7 +39,7 @@ app.post('/add_user', urlencodedParser ,function (req, res) {
   });
 })
 
-var server = app.listen(8888, function () {
+var server = app.listen(39998, function () {
 
   var host = server.address().address
   var port = server.address().port
