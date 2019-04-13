@@ -12,32 +12,20 @@ var app = express();
 
 var shown_offset = null;
 // 读取文件内容
-var ipList = JSON.parse(fs.readFileSync('proxys.json', 'utf-8')),
-  dqIpList = [];
-var ipRandom = 0;
-// console.log(ipRandom);
-// console.log(ipList[ipRandom]);
+var ipList = JSON.parse(fs.readFileSync('proxys.json', 'utf-8'));
+var ipRandom = Math.floor(Math.random() * ((ipList.length-1) - 1 + 0) + 0);
+console.log(ipList[ipRandom].ip);
+console.log(ipRandom);
+console.log(ipList[ipRandom]);
+console.log(ipList[ipRandom].type);
+console.log(ipList[ipRandom].port);
+console.log(ipList[ipRandom]['type'].toLowerCase()+"://"+ipList[ipRandom]['ip']+":"+ipList[ipRandom]['port']);
 
-var proxy = "";
-var page = 1;
-
-const inspectIpFun = ()=>{
-  // 检测当前ip是否可用
-  inspectIp(ipList,0,5).then(ipXhr=>{
-    if(ipXhr.length > 0){
-      console.log(ipXhr);
-      dqIpList = ipXhr;
-      ipRandom = Math.floor(Math.random() * ((ipXhr.length-1) - 0 + 1) + 0); // max - min + 1 + max
-      proxy = ipXhr[ipRandom];
-      console.log(ipRandom);
-      console.log("当前ip为:" + proxy);
-    } else {
-      proxy = "";
-      console.log("没有可使用的ip");
-    }
-    collection();
-  });
-}
+//
+// 检测当前ip是否可用
+// inspectIp(ipList).then(xhr=>{
+//   console.log(xhr);
+// });
 
 // 获取所有数据
 const getList = ()=>{
@@ -49,7 +37,11 @@ const getList = ()=>{
   });
   return promise;
 }
+
 // 通过 GET 请求来读取 http://cnodejs.org/ 的内容
+var proxy = "";
+// var proxy = (ipList[ipRandom]['type'].toLowerCase()+"://"+ipList[ipRandom]['ip']+":"+ipList[ipRandom]['port']);
+console.log(proxy);
 var header = {
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
   'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.6',
@@ -60,7 +52,6 @@ var header = {
 };
 // console.log(header);
 function collection(){
-  console.log("loading start" + proxy);
   getList().then(data=>{
     // console.log(data);
     superagent  // 发起请求
@@ -70,7 +61,6 @@ function collection(){
       .end(onresponse);
     // 对返回的response进行处理
     function onresponse(err, res) {
-      console.log("all info");
       if (err) {
         console.log(err);
         writeLog(JSON.stringify(err),'../log/err.log');
@@ -93,7 +83,6 @@ function collection(){
                 .end(getDetails);
               // 对返回的response进行处理
               function getDetails(err, res) {
-                console.log("detail ~~");
                 let fabulous = 0;
                 if (err) {
                   console.log(err);
@@ -107,10 +96,6 @@ function collection(){
                   },err=>{
                     console.log(err);
                   });
-                  dqIpList.splice(ipRandom,1);
-                  ipRandom = Math.floor(Math.random() * ((dqIpList.length-1) - 0 + 1) + 0); // max - min + 1 + max
-                  proxy = dqIpList[ipRandom];
-
                 } else {
                   if(res.status == 200){
                     let $ = cheerio.load(res.text);
@@ -130,26 +115,15 @@ function collection(){
               }
             });
             shown_offset = res.body.shown_offset;
+            var timeRandom = Math.floor(Math.random()*(10000-5000)+5000);
+            console.log(timeRandom+"秒后执行下一条");
+            setTimeout(()=>{
+              collection();
+            },timeRandom);
           }
         }
       }
-      var timeRandom = Math.floor(Math.random()*(3000-1000)+1000);
-      console.log(timeRandom+"秒后执行下一条");
-      setTimeout(()=>{
-        page ++;
-        console.log("第" + page + "条开始");
-        inspectIpFun();
-      },timeRandom);
     };
   });
 }
-inspectIpFun();
-// var i = 0;
-// function fun(){
-//   console.log(Math.floor(Math.random() * (10 - 1 + 1) + 1));
-//   i++;
-//   if(i<100){
-//     fun();
-//   }
-// }
-// fun();
+collection();

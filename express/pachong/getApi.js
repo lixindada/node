@@ -2,7 +2,9 @@ var request = require("request");
 var cheerio = require("cheerio");
 var userAgents = require("./userAgent");
 var baseMethod = require('../common/base'); // 公共方法
+var mysqlDB = require('../mysql');
 var fs = require("fs");
+var sd = require('silly-datetime');// 时间对象
 
 var proxys =[];
 var useful =[];
@@ -97,15 +99,14 @@ function check(){
 function saveProxys(){
   if(useful.length>0){
     let list = [];
-    // useful.map(item=>{
-    //   if(item.indexOf("https")){
-    //
-    //   }
-    // })
-    if(fs.readFileSync("proxys.json") == ""){
-      useful[0].time = baseMethod.formatDateTime(new Date());
-    }
-    fs.writeFileSync("proxys.json",JSON.stringify(useful));
+    useful.map(item=>{
+      var time=sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+      var  sql = `INSERT INTO proxy_list (id, ip, port,type,href,createTime,time,status)` +
+      ` VALUES ('',${JSON.stringify(item.ip)},${JSON.stringify(item.port)},${JSON.stringify(item.type)},${JSON.stringify(item.href)},${JSON.stringify(new Date().getTime())},${JSON.stringify(time)},1)`;
+      mysqlDB(sql,false).then(resDB=>{
+        // console.log(resDB);
+      });
+    })
   }
   console.log("Save finished!");
 }

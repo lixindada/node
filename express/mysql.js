@@ -18,7 +18,7 @@ module.exports = function(sql, isApp){
         if(isApp){
           writeLog(err.message+'\n'+sql,'errs.log');
         } else {
-          writeLog(err.message+'\n'+sql,'err.log');
+          writeLog(err.message+'\n'+sql,'../log/err.log');
         }
         // console.log(writeLog);
         // console.log('[SELECT ERROR] - ',err.message);
