@@ -16,7 +16,7 @@ module.exports = function(sql, isApp){
     var data = connection.query(sql,function (err, result) {
       if(err){
         if(isApp){
-          writeLog(err.message+'\n'+sql,'errs.log');
+          writeLog(err.message+'\n'+sql,'../log/err.log');
         } else {
           writeLog(err.message+'\n'+sql,'../log/err.log');
         }

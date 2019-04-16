@@ -7,6 +7,8 @@ function housrFun(){
   writeLog("第" + num + "轮\n","../log/pachong.log");
   function fun(){
     getApi(i).then(xhr=>{
+      // console.log(xhr);
+      writeLog("共" + xhr.num + "条\n","../log/pachong.log");
       if(i < Math.floor(2644/24) * num){
         console.log("第" + i + "次");
         writeLog("第" + i + "次\n","../log/pachong.log");
@@ -26,6 +28,6 @@ function housrFun(){
       num = 1;
     }
     housrFun();
-  },3600000); // 5 min
+  },3600000); // 24小时
 }
 housrFun();
