@@ -6,11 +6,11 @@ var cheerio = require('cheerio');
 var mysqlDB = require('../mysql');
 var writeLog = require('../common/writeLog'); // 写日志
 var getApi = require('./getApi'); // 获取代理API
-var inspectIp = require('../common/inspectIp'); // 检测是否是有效IP
+// var inspectIp = require('../common/inspectIp'); // 检测是否是有效IP
 var fs = require("fs");
 var app = express();
 
-var page = 2;
+var page = 1;
 // 读取文件内容
 // var ipList = JSON.parse(fs.readFileSync('proxys.json', 'utf-8'));
 // var ipRandom = Math.floor(Math.random() * ((ipList.length-1) - 1 + 0) + 0);
@@ -45,6 +45,9 @@ var header = {
 };
 // console.log(header);
 function collection(){
+  writeLog(page + "start",'../log/qdfun.log');
+  let repeatNum = 0,
+    availableNum = 0;
   let url = 'https://www.qdfuns.com/article/list/newest/page/' + page + '.html';
   getList().then(data=>{
     // console.log(data);
@@ -74,7 +77,7 @@ function collection(){
                 // console.log("重复");
                 // console.log(title);
                 // console.log(data[i].title);
-                writeLog("重复" + title + data[i].title,'../log/qdfun.log');
+                // writeLog("重复" + title + data[i].title,'../log/qdfun.log');
                 isRepeat = false;
               }
             }
@@ -105,6 +108,12 @@ function collection(){
               };
             }
           })
+          var timeRandom = Math.floor(Math.random()*(10000-5000)+5000);
+          console.log(timeRandom+"秒后执行下一条");
+          // setTimeout(()=>{
+          //   page ++;
+          //   collection();
+          // },timeRandom);
         }
       }
     };

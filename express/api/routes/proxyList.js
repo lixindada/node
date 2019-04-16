@@ -10,12 +10,10 @@ var [proxys,proxysMinNum,proxysMaxNum] = [[],0,0];
 
 /* GET proxysList page. */
 router.get('/', function(req, routerRes, next) {
-  var  sql = `select href from proxy_list where status = 1 limit 1`;
+  var  sql = `select href from proxy_list where status = 1 order by createTime desc limit 1`;
   mysqlDB(sql,true).then(resDB=>{
     routerRes.json({code:200,data:resDB});
   });
 });
-
-
 
 module.exports = router;

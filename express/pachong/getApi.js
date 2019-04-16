@@ -30,7 +30,7 @@ const getList = ()=>{
 function getProxys(pageNum){
   const promise = new Promise((resolve) => {
     let userAgent = userAgents[parseInt(Math.random()*userAgents.length)];
-      url = "https://www.xicidaili.com/nn/"+pageNum;
+      url = "https://www.xicidaili.com/nt/"+pageNum;
     useful = [];
     request({
       url:url,
@@ -71,7 +71,7 @@ function getProxys(pageNum){
  */
 function check(){
   const promise = new Promise((resolve) => {
-    var url = "http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js";
+    var url = "https://www.csdn.net/api/articles?type=more&category=web&shown_offset";
     var flag = proxys.length;//检查异步函数是否执行完成的标志量
     for(var i=0;i<proxys.length;i++){
       var proxy = proxys[i];

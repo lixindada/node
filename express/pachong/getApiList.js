@@ -15,9 +15,9 @@ function housrFun(){
         i++;
         var randoms = Math.floor(Math.random() * (10000 - 5000 + 1) + 5000);
         console.log(randoms + "s后开始下一次");
-        setTimeout(()=>{
-          fun();
-        },randoms);
+        // setTimeout(()=>{
+        //   fun();
+        // },randoms);
       }
     });
   }
